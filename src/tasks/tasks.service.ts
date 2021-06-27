@@ -7,10 +7,35 @@ import { CreateTaskDto } from './dto/create-task.dto';
 export class TasksService {
   private tasks: Task[] = [];
 
+  // Get all tasks
   public getAllTasks(): Task[] {
     return this.tasks;
   }
 
+  // Get task by id
+  public getTaskById(id): Task | string {
+    const task = this.tasks.find((task) => task.id === id);
+
+    if (!task) {
+      return 'No task found';
+    }
+
+    return task;
+  }
+
+  // Delete a task
+  public deleteTask(id): boolean {
+    const taskIndex = this.tasks.findIndex((task) => task.id === id);
+
+    if (taskIndex === -1) {
+      return false;
+    }
+
+    this.tasks.splice(taskIndex, 1);
+    return true;
+  }
+
+  // Create a task
   public createTask(createTaskDto: CreateTaskDto): Task {
     const { title, description } = createTaskDto;
 
