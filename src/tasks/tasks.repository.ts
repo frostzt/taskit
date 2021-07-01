@@ -7,10 +7,14 @@ import { Task } from './task.entity';
 
 @EntityRepository(Task)
 export class TasksRepository extends Repository<Task> {
-  public async getTasks(filterDto: GetTaskFilterDto): Promise<Task[]> {
+  public async getTasks(
+    filterDto: GetTaskFilterDto,
+    user: User,
+  ): Promise<Task[]> {
     const { status, search } = filterDto;
 
     const query = this.createQueryBuilder('task');
+    query.where({ user });
 
     if (status) {
       query.andWhere('task.status = :status', { status });
@@ -18,7 +22,7 @@ export class TasksRepository extends Repository<Task> {
 
     if (search) {
       query.andWhere(
-        'LOWER(task.title) LIKE LOWER(:search) OR LOWER(task.description) Like LOWER(:search)',
+        '(LOWER(task.title) LIKE LOWER(:search) OR LOWER(task.description) Like LOWER(:search))',
         { search: `%${search}%` },
       );
     }
