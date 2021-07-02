@@ -11,7 +11,7 @@ async function bootstrap() {
   app.useGlobalPipes(new ValidationPipe());
   app.useGlobalInterceptors(new TransformerInterceptor());
 
-  const PORT = process.env.PORT || 3000;
+  const PORT = process.env.PORT;
 
   await app.listen(PORT);
   logger.log(`Application running on port ${PORT}`);
