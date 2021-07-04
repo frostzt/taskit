@@ -4,6 +4,7 @@ import { TasksService } from './tasks.service';
 
 const mockTasksRepository = () => ({
   getTasks: jest.fn(),
+  getTasksById: jest.fn(),
 });
 
 const mockUser = {
@@ -38,6 +39,14 @@ describe('TaskService', () => {
       tasksRepository.getTasks.mockResolvedValue('somevalue');
       const results = await tasksService.getTasks(null, mockUser);
       expect(tasksRepository.getTasks).toHaveBeenCalled();
+      expect(results).toEqual('somevalue');
+    });
+  });
+
+  describe('getTasksById', () => {
+    it('Calls TasksRepository.getTasksById and returns the results', async () => {
+      tasksRepository.getTasksById.mockResolvedValue('somevalue');
+      const results = await tasksService.getTaskById('random-id', mockUser);
       expect(results).toEqual('somevalue');
     });
   });
