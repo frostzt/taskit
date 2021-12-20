@@ -12,14 +12,14 @@ export class UsersRepository extends Repository<User> {
   public async createUser(
     authCredentialsDto: AuthCredentialsDto,
   ): Promise<void> {
-    const { username, password } = authCredentialsDto;
+    const { email, password } = authCredentialsDto;
 
     // Hashing
     const salt = await bcrypt.genSalt();
     const hashedPassword = await bcrypt.hash(password, salt);
 
     const newUser = this.create({
-      username,
+      email,
       password: hashedPassword,
     });
 
@@ -27,7 +27,7 @@ export class UsersRepository extends Repository<User> {
       await this.save(newUser);
     } catch (error) {
       if (error.code === '23505') {
-        throw new ConflictException('Username already exists');
+        throw new ConflictException('Email already exists');
       }
       console.error(error);
       throw new InternalServerErrorException();

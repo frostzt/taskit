@@ -11,7 +11,7 @@ const mockTasksRepository = () => ({
 
 const mockUser = {
   id: 'some-random-id',
-  username: 'frostzt',
+  email: 'frostzt@test.com',
   password: 'somepassword',
   tasks: [],
 };
