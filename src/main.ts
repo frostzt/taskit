@@ -7,7 +7,7 @@ import { Logger } from '@nestjs/common';
 async function bootstrap() {
   const logger = new Logger();
   const app = await NestFactory.create(AppModule);
-  app.enableCors({ origin: 'http://localhost:3000', credentials: true });
+  app.enableCors({ origin: 'https://getnoted.vercel.app/', credentials: true });
   app.useGlobalPipes(new ValidationPipe());
   app.useGlobalInterceptors(new TransformerInterceptor());
 
